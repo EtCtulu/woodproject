@@ -26,12 +26,12 @@ public class weaponRaycast : MonoBehaviour
         RaycastHit hit;
 
         // Permets de voir le raycast du pistolet et sa range, il est en rouge
-        Debug.DrawRay(transform.position, transform.forward * 20, Color.red);
+        Debug.DrawRay(transform.position, transform.forward * 30, Color.red);
 
         if (Input.GetButtonDown("Fire1"))
         {
-            // Raycast du pistolet
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 20, layerMask)) 
+            // Raycast du pistolet, il as une range de 30
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 30, layerMask)) 
             {
                 
 
