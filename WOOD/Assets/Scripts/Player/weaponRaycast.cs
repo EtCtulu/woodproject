@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class weaponRaycast : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Les dégats des armes
+    [Header("Damages")]
+    public float pistolDmg = 10;
+
     void Start()
     {
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
@@ -38,6 +41,7 @@ public class weaponRaycast : MonoBehaviour
                 // Permet de savoir si on as touché un Enemy classique
                 if(hit.collider.gameObject.tag == "Enemy")
                 {
+                    hit.transform.GetComponent<enemy>().hp -= pistolDmg;
                     Debug.Log("Touché");
                 }
             }
