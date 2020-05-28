@@ -8,6 +8,10 @@ public class weaponRaycast : MonoBehaviour
     [Header("Damages")]
     public float pistolDmg = 10;
 
+    // Les munitions des armes
+    [Header("Ammo")]
+    public float pistolAmmo = 100;
+
     void Start()
     {
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
@@ -33,10 +37,12 @@ public class weaponRaycast : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            // Raycast du pistolet, il as une range de 30
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 30, layerMask)) 
+            // Raycast du pistolet, il as une range de 30, et on peut tirer que si on as des balles
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 30, layerMask) && pistolAmmo != 0) 
             {
-                
+                // Les munitions qui décrémentes
+                pistolAmmo--;
+                Debug.Log(pistolAmmo);
 
                 // Permet de savoir si on as touché un Enemy classique
                 if(hit.collider.gameObject.tag == "Enemy")
