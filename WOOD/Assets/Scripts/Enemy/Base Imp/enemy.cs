@@ -14,7 +14,7 @@ public class enemy : MonoBehaviour
 
     // La destination
     Vector3 destination;
-    
+
 
     void Start()
     {
@@ -26,12 +26,12 @@ public class enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(hp <= 0f)
+        if (hp <= 0f)
         {
             Destroy(gameObject);
         }
         // Si le player est dans la range, la destination sera le joueur.
-        if(GetComponentInChildren<playerDetector>().playerInRange == true)
+        if (GetComponentInChildren<playerDetector>().playerInRange == true)
         {
             // La destination est set a Player, on recherche donc son transform
             destination = player.transform.position;
@@ -39,10 +39,42 @@ public class enemy : MonoBehaviour
             agent.destination = destination;
         }
         // A la sortie de la zone, la destination sera lui même, il ne bougera donc pas.
-        if(GetComponentInChildren<playerDetector>().playerInRange == false)
+        if (GetComponentInChildren<playerDetector>().playerInRange == false)
         {
             destination = this.transform.position;
             agent.destination = destination;
         }
+
+        // Création du layermask
+        int layerMask = 1 << 8;
+
+        layerMask = ~layerMask;
+
+
+        // La valeur hit du raycast
+        RaycastHit hit;
+
+        if (GetComponentInChildren<playerDetector>().playerinSquare == true)
+        {
+
+            // Permets de définir une localisation celle-ci est le player
+            Vector3 direction = (player.transform.position - transform.position).normalized;
+
+            // Le raycast part de l'enemy et la direction est le player.
+            if (Physics.Raycast(this.transform.position, direction, out hit, Mathf.Infinity, layerMask)) //Range infinie
+            {
+                Debug.DrawRay(this.transform.position, direction, Color.cyan);
+                if (hit.collider.tag == "Player")
+                {
+                    GetComponentInChildren<playerDetector>().playerInRange = true;
+                }
+                else
+                {
+                    GetComponentInChildren<playerDetector>().playerInRange = false;
+                }
+            }
+        }
     }
 }
+    
+

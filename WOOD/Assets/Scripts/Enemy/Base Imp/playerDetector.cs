@@ -7,7 +7,7 @@ public class playerDetector : MonoBehaviour
     // Le bool qui dit si le joueur est en range ou pas 
     public bool playerInRange = false;
     // Si le joueur est dans le carré, ça autorise le raycast
-    private bool playerinSquare = false;
+    public bool playerinSquare = false;
 
     // Declaration du personage
     private GameObject player;
@@ -35,29 +35,10 @@ public class playerDetector : MonoBehaviour
 
         pointer.transform.LookAt(player.transform);
         
-        // Création du layermask
-        int layerMask = 1 << 8;
+        
 
-        layerMask = ~layerMask;
-
-        // La valeur hit du raycast
-        RaycastHit hit;
-
-        if (playerinSquare == true)
-        {
-            if (Physics.Raycast(transform.position, player.transform.position, out hit, Mathf.Infinity, layerMask)) //Range infinie
-            {
-                Debug.DrawRay(transform.position, player.transform.position, Color.cyan);
-                if(hit.collider.tag == "Player")
-                {
-                    playerInRange = true;
-                }
-            }
-            else
-            {
-                playerInRange = false;
-            }
-        }
+        
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -65,7 +46,6 @@ public class playerDetector : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             playerinSquare = true;
-            // playerInRange = true;
         }
     }
     private void OnTriggerExit(Collider other)
