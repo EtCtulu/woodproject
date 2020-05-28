@@ -66,12 +66,11 @@ public class weaponRaycast : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
+            
             // Raycast du pistolet, il as une range de 30, et on peut tirer que si on as des balles
             if (Physics.Raycast(transform.position, transform.forward, out hit, 30, layerMask) && pistolAmmo != 0 && pistol == true) 
             {
-                // Les munitions qui décrémentes
-                pistolAmmo--;
-                Debug.Log(pistolAmmo);
+                
 
                 // Permet de savoir si on as touché un Enemy classique
                 if(hit.collider.gameObject.tag == "Enemy")
@@ -79,6 +78,13 @@ public class weaponRaycast : MonoBehaviour
                     hit.transform.GetComponent<enemy>().hp -= pistolDmg;
                     Debug.Log("Touché");
                 }
+            }
+            // Les munitions qui décrémentent ici, il faut bien la mettre après le raycast pour que les munitions partent après le tir.
+            if (pistol == true)
+            {
+                // Les munitions qui décrémentes
+                pistolAmmo--;
+                Debug.Log(pistolAmmo);
             }
         }
     }
