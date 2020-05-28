@@ -15,17 +15,62 @@ public class enemy : MonoBehaviour
     // La destination
     Vector3 destination;
 
+    // Attack Pattern
+    bool attack = false;
+    float attackTime = 0f;
+
+    // Attack prefab
+    public GameObject attackPre;
+
 
     void Start()
     {
         // On cherche le joueur puis l'agent
         player = GameObject.FindWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
+        // On cherche l'objet dans le gameObject des dégats
+        attackPre = this.transform.Find("Attack").gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        // Si l'enemy est proche du joueur, l'attaque est lancée après 1 seconde
+        if ((this.transform.position - player.transform.position).sqrMagnitude < 3f)
+        {
+            // Debug.Log("Attaque");
+
+            // Le joueur est détecté, l'enemy s'arrète
+            destination = this.transform.position;
+            agent.destination = destination;
+            // Le check d'attaque est détecté
+            attack = true;
+        }
+        if(attack == true)
+        {
+            // Le timer avant l'attaque se lance, on maintient le joueur bloqué
+            attackTime = attackTime + Time.deltaTime;
+            destination = this.transform.position;
+            agent.destination = destination;
+        }
+        // La zone d'attaque est activée
+        if(attackTime >= 0.5f)
+        {
+            attackPre.SetActive(true);
+        }
+        // La zone d'attaque est désactivée, tout les patterns paramètres d'attaques sont reset, et la destination est re le joueur
+        if(attackTime >= 1f)
+        {
+            attackPre.SetActive(false);
+            attack = false;
+            attackTime = 0f;
+            // La destination est set a Player, on recherche donc son transform
+            destination = player.transform.position;
+            // On déclare que la destination est set a destination
+            agent.destination = destination;
+        }
+
         if (hp <= 0f)
         {
             Destroy(gameObject);
