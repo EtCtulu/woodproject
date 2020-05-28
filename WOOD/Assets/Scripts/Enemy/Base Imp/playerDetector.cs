@@ -20,27 +20,15 @@ public class playerDetector : MonoBehaviour
         // On déclare le joueur
         player = GameObject.FindGameObjectWithTag("Player");
 
-        // Declaration du raycast
-        Vector3 fwd = transform.TransformDirection(Vector3.forward);
-
-        pointer = this.transform.Find("ray").gameObject;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        transform.LookAt(player.transform);
-
-        pointer.transform.LookAt(player.transform);
-        
-        
-
-        
         
     }
 
+    // Si le joueur est dans le cube, tiyt est notifié
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
@@ -48,6 +36,8 @@ public class playerDetector : MonoBehaviour
             playerinSquare = true;
         }
     }
+
+    // Si le joueur n'y est pas, ça annule tout.
     private void OnTriggerExit(Collider other)
     {
         if(other.gameObject.tag == "Player")

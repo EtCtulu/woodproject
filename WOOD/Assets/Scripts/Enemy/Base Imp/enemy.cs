@@ -63,11 +63,13 @@ public class enemy : MonoBehaviour
             // Le raycast part de l'enemy et la direction est le player.
             if (Physics.Raycast(this.transform.position, direction, out hit, Mathf.Infinity, layerMask)) //Range infinie
             {
+                // Si le raycast entre en collision avec le player, ça le poursuit.
                 Debug.DrawRay(this.transform.position, direction, Color.cyan);
                 if (hit.collider.tag == "Player")
                 {
                     GetComponentInChildren<playerDetector>().playerInRange = true;
                 }
+                // Si le raycast entre en contact avec tout sauf le player, il s'arrète
                 else
                 {
                     GetComponentInChildren<playerDetector>().playerInRange = false;
