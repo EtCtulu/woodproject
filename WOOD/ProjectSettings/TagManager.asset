@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Canvas
+  - Melee
   layers:
   - Default
   - TransparentFX
