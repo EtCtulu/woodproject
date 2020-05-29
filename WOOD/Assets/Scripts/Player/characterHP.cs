@@ -7,13 +7,11 @@ public class characterHP : MonoBehaviour
 {
     // Déclaration des scripts de Vie et d'armure
     [Header("Health And Armor")]
-    public float maxHp = 100;
     public float hp = 100;
     public float armor = 0;
 
     [Header("Barre de vie")]
-    public Image hpBar;
-    private float ratio;
+    public Text hpBar;
 
     // Le float qui changera en fonction des dégats
     private float dmgToTake;
@@ -26,8 +24,7 @@ public class characterHP : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ratio = hp / maxHp;
-        hpBar.rectTransform.localScale = new Vector3(ratio, 1, 1);
+        hpBar.text = "HP : " + hp;
     }
 
     private void OnTriggerEnter(Collider other)
