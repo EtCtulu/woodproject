@@ -81,11 +81,7 @@ public class characterController : MonoBehaviour
 
 
         }
-        // De retour au sol, si on as pas sauté en double, ça passe le double saut en false
-        if (IsGrounded())
-        {
-            doubleJump = false;
-        }
+
 
         // Ceci est le crouch, quand on appuyes sur le CTRL de gauche, la scale du joueur se baisse, et quand on relache, ça remonte.
         if (Input.GetKeyDown(KeyCode.LeftControl))

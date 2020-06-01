@@ -122,6 +122,10 @@ public class enemy : MonoBehaviour
             }
         }
     }
+    private void OnDestroy()
+    {
+        FindObjectOfType<AudioManager>().Play("ImpDeath");
+    }
 }
     
 

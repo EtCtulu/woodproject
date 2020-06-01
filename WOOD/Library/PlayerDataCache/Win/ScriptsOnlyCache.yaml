@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - AudioManager
     - camMouseLook
     - characterController
     - characterHP
@@ -13,8 +14,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -53,7 +56,15 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 65
       Script: {instanceID: 0}
+    - Class: 74
+      Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 91
+      Script: {instanceID: 0}
+    - Class: 95
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
@@ -70,21 +81,23 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11412}
     - Class: 114
-      Script: {instanceID: 11736}
+      Script: {instanceID: 11660}
     - Class: 114
-      Script: {instanceID: 12460}
+      Script: {instanceID: 11738}
     - Class: 114
-      Script: {instanceID: 12558}
+      Script: {instanceID: 12464}
     - Class: 114
-      Script: {instanceID: 12596}
+      Script: {instanceID: 12562}
     - Class: 114
-      Script: {instanceID: 12748}
+      Script: {instanceID: 12600}
     - Class: 114
-      Script: {instanceID: 12796}
+      Script: {instanceID: 12752}
     - Class: 114
-      Script: {instanceID: 12890}
+      Script: {instanceID: 12800}
     - Class: 114
-      Script: {instanceID: 12950}
+      Script: {instanceID: 12894}
+    - Class: 114
+      Script: {instanceID: 12954}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -98,8 +111,6 @@ ScriptsOnlyBuild:
     - Class: 196
       Script: {instanceID: 0}
     - Class: 208
-      Script: {instanceID: 0}
-    - Class: 212
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -216,7 +227,7 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 7f9e767d6899c0c05dc5dc4a7834a8f8
+      Hash: 7aa3016b22bcb699a56acc3f525d51c7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: characterController
@@ -280,6 +291,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Mask
+  - hash:
+      serializedVersion: 2
+      Hash: 7d71c6ac3b1db75f3799f45080e12660
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AudioManager
   - hash:
       serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
@@ -474,7 +491,7 @@ ScriptsOnlyBuild:
     className: dmg
   - hash:
       serializedVersion: 2
-      Hash: 6cfd8c9430931415b21ae1bc1da8f041
+      Hash: a834f10ac8fa5f558e75aff47c95bc2b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: weaponRaycast
@@ -583,4 +600,4 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/etctu/Desktop/Woude/WOOD.exe
+  playerPath: C:/Users/etctu/Desktop/Cyberpunque/WOOD.exe
