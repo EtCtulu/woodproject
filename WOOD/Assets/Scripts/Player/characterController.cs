@@ -20,8 +20,6 @@ public class characterController : MonoBehaviour
 
     // Nombre de jumps
     [Header("DoubleJump")]
-    // public int maxDoubleJump = 1;
-    // public int doubleJump = 1;
     private bool doubleJump = false;
 
 
@@ -68,12 +66,14 @@ public class characterController : MonoBehaviour
         }
 
         // Le saut
+        // Le double saut est mis avant le saut normal, si le bool du double saut est en true, on peut sauter, très très très autorisé.
         if (doubleJump == true && Input.GetButtonDown("Jump"))
         {
             // La force du saut
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             doubleJump = false;
         }
+        // Si on est détecté au sol, on saute et basse le bool de double saut en true
         if (IsGrounded() && Input.GetButtonDown("Jump"))
         {
             // La force du saut
@@ -81,14 +81,18 @@ public class characterController : MonoBehaviour
             doubleJump = true;
 
 
-        }        
+        }
+        // De retour au sol, si on as pas sauté en double, ça passe le double saut en false
+        if (IsGrounded())
+        {
+            doubleJump = false;
+        }
         
     }
 
     // Le check du ground
     private bool IsGrounded()
     {
-        // doubleJump = maxDoubleJump;
         return Physics.CheckCapsule(col.bounds.center, new Vector3(col.bounds.center.x, col.bounds.min.y
             , col.bounds.center.z), col.radius * .9f, groundLayer);
     }
