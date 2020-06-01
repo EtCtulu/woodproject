@@ -84,7 +84,7 @@ public class weaponRaycast : MonoBehaviour
                 }
             }
             // Les munitions qui décrémentent ici, il faut bien la mettre après le raycast pour que les munitions partent après le tir.
-            if (pistol == true)
+            if (pistol == true && pistolAmmo != 0)
             {
                 FindObjectOfType<AudioManager>().Play("FirePistol");
                 // Le trigger du shoot de l'anim.
