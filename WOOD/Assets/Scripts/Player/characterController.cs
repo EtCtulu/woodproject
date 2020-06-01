@@ -38,7 +38,6 @@ public class characterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Mathf.Clamp(doubleJump, 0, maxDoubleJump);
 
         // L'axis vertical
         float translation = Input.GetAxis("Vertical") * speed;
@@ -86,6 +85,16 @@ public class characterController : MonoBehaviour
         if (IsGrounded())
         {
             doubleJump = false;
+        }
+
+        // Ceci est le crouch, quand on appuyes sur le CTRL de gauche, la scale du joueur se baisse, et quand on relache, ça remonte.
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            transform.localScale = transform.localScale + new Vector3(0f, -0.7f, 0f);
+        }
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            transform.localScale = transform.localScale + new Vector3(0f, +0.7f, 0f);
         }
         
     }
