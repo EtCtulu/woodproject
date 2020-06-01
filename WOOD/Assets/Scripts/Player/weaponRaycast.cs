@@ -24,11 +24,15 @@ public class weaponRaycast : MonoBehaviour
     // Les bools des armes
     bool pistol = true;
 
+    // Déclaration de l'animator des armes.
+    public Animator pistolAnim;
+
     void Start()
     {
         canvas = GameObject.FindGameObjectWithTag("Canvas");
         ammoText = canvas.transform.Find("ammo").gameObject.GetComponent<Text>();
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
+        pistolAnim = this.transform.Find("Pistol").gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -82,6 +86,9 @@ public class weaponRaycast : MonoBehaviour
             // Les munitions qui décrémentent ici, il faut bien la mettre après le raycast pour que les munitions partent après le tir.
             if (pistol == true)
             {
+                FindObjectOfType<AudioManager>().Play("FirePistol");
+                // Le trigger du shoot de l'anim.
+                pistolAnim.SetTrigger("Trigger");
                 // Les munitions qui décrémentes
                 pistolAmmo--;
                 Debug.Log(pistolAmmo);
