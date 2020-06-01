@@ -20,8 +20,9 @@ public class characterController : MonoBehaviour
 
     // Nombre de jumps
     [Header("DoubleJump")]
-    public int maxDoubleJump = 1;
-    public int doubleJump = 1;
+    // public int maxDoubleJump = 1;
+    // public int doubleJump = 1;
+    private bool doubleJump = false;
 
 
 
@@ -29,6 +30,7 @@ public class characterController : MonoBehaviour
     {
         // Curseur bloqué au centre du joueur
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         // Déclaration des raccourcis
         rb = GetComponent<Rigidbody>();
@@ -38,7 +40,7 @@ public class characterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Mathf.Clamp(doubleJump, 0, maxDoubleJump);
+        // Mathf.Clamp(doubleJump, 0, maxDoubleJump);
 
         // L'axis vertical
         float translation = Input.GetAxis("Vertical") * speed;
@@ -61,32 +63,32 @@ public class characterController : MonoBehaviour
 
             // Enlève le bloquage du curseur
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
 
         }
 
         // Le saut
+        if (doubleJump == true && Input.GetButtonDown("Jump"))
+        {
+            // La force du saut
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            doubleJump = false;
+        }
         if (IsGrounded() && Input.GetButtonDown("Jump"))
         {
             // La force du saut
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            
+            doubleJump = true;
 
 
-        }
-        if (IsGrounded() != Physics.CheckCapsule(col.bounds.center, new Vector3(col.bounds.center.x, col.bounds.min.y
-            , col.bounds.center.z), col.radius * .9f, groundLayer) && doubleJump != 0 && Input.GetButtonDown("Jump"))
-        {
-            // La force du saut
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            doubleJump--;
-            
-        }
+        }        
+        
     }
 
     // Le check du ground
     private bool IsGrounded()
     {
-        doubleJump = maxDoubleJump;
+        // doubleJump = maxDoubleJump;
         return Physics.CheckCapsule(col.bounds.center, new Vector3(col.bounds.center.x, col.bounds.min.y
             , col.bounds.center.z), col.radius * .9f, groundLayer);
     }
