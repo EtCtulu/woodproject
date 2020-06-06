@@ -8,10 +8,12 @@ public class weaponRaycast : MonoBehaviour
     // Les dégats des armes
     [Header("Damages")]
     public float pistolDmg = 10;
+    public float smgDmg = 3;
 
     // Les munitions des armes
     [Header("Ammo")]
     public int pistolAmmo = 100;
+    public int smgAmmo = 100;
 
     // Ui pour les munitions
     GameObject canvas;
@@ -23,13 +25,15 @@ public class weaponRaycast : MonoBehaviour
 
     // Les bools des armes
     bool pistol = true;
+    bool smg = false;
 
     // Déclaration de l'animator des armes.
     public Animator pistolAnim;
 
     [Header("Cadence de tir")]
     public float timerBetweenShots = 0;
-    public float timerBetweenShotsGUN = 0.5f;
+    public float timerBetweenShotsPistol = 0.5f;
+    public float timerBetweenShotsSMG = 0.1f;
 
     void Start()
     {
@@ -65,15 +69,27 @@ public class weaponRaycast : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             pistol = true;
+            smg = false;
             equipedWpn = "Pistol : ";
             timerBetweenShots = 0f;
         }
-        if(pistol == true)
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            smg = true;
+            pistol = false;
+            equipedWpn = "Smg : ";
+            timerBetweenShots = 0f;
+        }
+        if (pistol == true)
         {
             equipedWpnAmmo = pistolAmmo;
             equipedWpn = "Pistol : ";
         }
-
+        if (smg == true)
+        {
+            equipedWpnAmmo = smgAmmo;
+            equipedWpn = "Smg : ";
+        }
 
         if (Input.GetButton("Fire1"))
         {
@@ -100,7 +116,31 @@ public class weaponRaycast : MonoBehaviour
                 // Les munitions qui décrémentes
                 pistolAmmo--;
                 Debug.Log(pistolAmmo);
-                timerBetweenShots = timerBetweenShotsGUN;
+                timerBetweenShots = timerBetweenShotsPistol;
+            }
+
+            // Les munitions qui décrémentent ici, il faut bien la mettre après le raycast pour que les munitions partent après le tir.
+            if (smg == true && smgAmmo != 0 && timerBetweenShots <= 0f)
+            {
+                // Raycast du pistolet, il as une range de 30, et on peut tirer que si on as des balles
+                if (Physics.Raycast(transform.position, transform.forward, out hit, 30, layerMask))
+                {
+
+
+                    // Permet de savoir si on as touché un Enemy classique
+                    if (hit.collider.gameObject.tag == "Enemy")
+                    {
+                        hit.transform.GetComponent<enemy>().hp -= smgDmg;
+                        Debug.Log("Touché");
+                    }
+                }
+                FindObjectOfType<AudioManager>().Play("FirePistol");
+                // Le trigger du shoot de l'anim.
+                pistolAnim.SetTrigger("Trigger");
+                // Les munitions qui décrémentes
+                smgAmmo--;
+                Debug.Log(smgAmmo);
+                timerBetweenShots = timerBetweenShotsSMG;
             }
         }
     }
