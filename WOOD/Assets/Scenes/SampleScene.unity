@@ -1334,6 +1334,8 @@ MonoBehaviour:
   pistolAmmo: 100
   ammoText: {fileID: 1977141468}
   pistolAnim: {fileID: 284987466}
+  timerBetweenShots: 0
+  timerBetweenShotsGUN: 0.6
 --- !u!1 &1069340891
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,6 +27,10 @@ public class weaponRaycast : MonoBehaviour
     // Déclaration de l'animator des armes.
     public Animator pistolAnim;
 
+    [Header("Cadence de tir")]
+    public float timerBetweenShots = 0;
+    public float timerBetweenShotsGUN = 0.5f;
+
     void Start()
     {
         canvas = GameObject.FindGameObjectWithTag("Canvas");
@@ -38,6 +42,8 @@ public class weaponRaycast : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timerBetweenShots = timerBetweenShots - Time.deltaTime;
+
         ammoText.text = equipedWpn + equipedWpnAmmo;
 
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
@@ -60,6 +66,7 @@ public class weaponRaycast : MonoBehaviour
         {
             pistol = true;
             equipedWpn = "Pistol : ";
+            timerBetweenShots = 0f;
         }
         if(pistol == true)
         {
@@ -68,30 +75,32 @@ public class weaponRaycast : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
             
-            // Raycast du pistolet, il as une range de 30, et on peut tirer que si on as des balles
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 30, layerMask) && pistolAmmo != 0 && pistol == true) 
-            {
-                
-
-                // Permet de savoir si on as touché un Enemy classique
-                if(hit.collider.gameObject.tag == "Enemy")
-                {
-                    hit.transform.GetComponent<enemy>().hp -= pistolDmg;
-                    Debug.Log("Touché");
-                }
-            }
+            
             // Les munitions qui décrémentent ici, il faut bien la mettre après le raycast pour que les munitions partent après le tir.
-            if (pistol == true && pistolAmmo != 0)
+            if (pistol == true && pistolAmmo != 0 && timerBetweenShots <= 0f)
             {
+                // Raycast du pistolet, il as une range de 30, et on peut tirer que si on as des balles
+                if (Physics.Raycast(transform.position, transform.forward, out hit, 30, layerMask))
+                {
+
+
+                    // Permet de savoir si on as touché un Enemy classique
+                    if (hit.collider.gameObject.tag == "Enemy")
+                    {
+                        hit.transform.GetComponent<enemy>().hp -= pistolDmg;
+                        Debug.Log("Touché");
+                    }
+                }
                 FindObjectOfType<AudioManager>().Play("FirePistol");
                 // Le trigger du shoot de l'anim.
                 pistolAnim.SetTrigger("Trigger");
                 // Les munitions qui décrémentes
                 pistolAmmo--;
                 Debug.Log(pistolAmmo);
+                timerBetweenShots = timerBetweenShotsGUN;
             }
         }
     }
